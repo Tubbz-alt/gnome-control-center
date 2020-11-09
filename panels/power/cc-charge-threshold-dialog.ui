@@ -1,0 +1,88 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<interface>
+  <!-- interface-requires gtk+ 3.0 -->
+  <template class="CcChargeThresholdDialog" parent="GtkDialog">
+    <property name="modal">True</property>
+    <child internal-child="vbox">
+      <object class="GtkBox">
+        <property name="visible">True</property>
+        <property name="margin">15</property>
+        <property name="spacing">15</property>
+        <child>
+          <object class="GtkLabel">
+            <property name="visible">True</property>
+            <property name="halign">start</property>
+            <property name="label">Foo</property>
+          </object>
+        </child>
+        <child>
+          <object class="GtkFrame">
+            <property name="visible">True</property>
+            <child>
+              <object class="GtkListBox" id="listbox">
+                <property name="visible">True</property>
+                <property name="selection-mode">GTK_SELECTION_BROWSE</property>
+                <signal name="row-activated" handler="row_activated_cb" object="CcChargeThresholdDialog" swapped="yes" />
+                <child>
+                  <object class="CcChargeThresholdRow" id="max_lifespan_row">
+                    <property name="visible">True</property>
+                    <property name="title">Max lifespan</property>
+                    <property name="description">Start charging when battery drops bellow 40%, charging up to 60%. Maximizes battery lifespan when system is useually used plugged in.</property>
+                    <child internal-child="radio">
+                      <object class="GtkRadioButton" id="max_lifespan_radio">
+                        <property name="group">max_lifespan_radio</property>
+                        <signal name="toggled" handler="radio_toggled_cb" object="CcChargeThresholdDialog" swapped="yes" />
+                      </object>
+                    </child>
+                  </object>
+                </child>
+                <child>
+                  <object class="CcChargeThresholdRow" id="balanced_row">
+                    <property name="visible">True</property>
+                    <property name="title">Balanced</property>
+                    <property name="description">Start charging when battery drops below 78%, and charge up to 80%.</property>
+                    <child internal-child="radio">
+                      <object class="GtkRadioButton" id="balanced_radio">
+                        <property name="group">max_lifespan_radio</property>
+                        <signal name="toggled" handler="radio_toggled_cb" object="CcChargeThresholdDialog" swapped="yes" />
+                      </object>
+                    </child>
+                  </object>
+                </child>
+                <child>
+                  <object class="CcChargeThresholdRow" id="full_capacity_row">
+                    <property name="visible">True</property>
+                    <property name="title">Full Capacity</property>
+                    <property name="description">Always charge to 100%</property>
+                    <child internal-child="radio">
+                      <object class="GtkRadioButton" id="full_capacity_radio">
+                        <property name="group">max_lifespan_radio</property>
+                        <signal name="toggled" handler="radio_toggled_cb" object="CcChargeThresholdDialog" swapped="yes" />
+                      </object>
+                    </child>
+                  </object>
+                </child>
+              </object>
+            </child>
+          </object>
+        </child>
+        <child>
+          <!-- Hack to show no radio button selected when profile is undefined -->
+          <object class="GtkRadioButton" id="hidden_radio">
+            <property name="visible">False</property>
+            <property name="group">max_lifespan_radio</property>
+            <signal name="toggled" handler="radio_toggled_cb" object="CcChargeThresholdDialog" swapped="yes" />
+          </object>
+        </child>
+      </object>
+    </child>
+    <child type="titlebar">
+      <object class="GtkHeaderBar" id="headerbar">
+        <property name="title">Battery Charge Thresholds</property>
+        <property name="visible">True</property>
+        <property name="can_focus">False</property>
+        <property name="show_close_button">True</property>
+      </object>
+    </child>
+  </template>
+</interface>
